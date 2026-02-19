@@ -72,6 +72,16 @@ class Player(Sprite2D):
         self.rotation += 50 * dt
 ```
 
+## Nodos incluidos
+
+- `Node`
+- `Node2D`
+- `Sprite2D`
+- `Area2D`
+- `Camera2D`
+- `CharacterBody2D`
+- `AnimatedSprite2D`
+
 ## Ejemplo oficial (Node2D + decoradores)
 
 ```python

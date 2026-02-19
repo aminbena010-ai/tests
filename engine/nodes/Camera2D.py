@@ -24,3 +24,10 @@ class Camera2D(Node2D):
             if isinstance(node, Node2D):
                 node.render_offset_x = cam_x
                 node.render_offset_y = cam_y
+
+    def update(self) -> None:
+        focus = self.target or self.parent
+        if not isinstance(focus, Node2D):
+            return
+        self.x = -focus.x + self.offset_x
+        self.y = -focus.y + self.offset_y

@@ -22,6 +22,7 @@ class Area2D(Node2D):
         self.height = float(height) if height is not None else size_h
         self._overlapping: set[Area2D] = set()
         self._enter_callbacks = self._collect_callbacks("_is_enter_callback")
+        self.rect = (self.x, self.y, self.width, self.height)
 
     def overlaps(self, other: "Area2D") -> bool:
         left_a = self.x
@@ -37,6 +38,8 @@ class Area2D(Node2D):
         return left_a < right_b and right_a > left_b and top_a < bottom_b and bottom_a > top_b
 
     def update_overlap(self, other: "Area2D") -> None:
+        self.update_rect()
+        other.update_rect()
         is_overlapping = self.overlaps(other)
         was_overlapping = other in self._overlapping
         if is_overlapping and not was_overlapping:
@@ -52,3 +55,11 @@ class Area2D(Node2D):
 
     def on_body_exited(self, other: "Area2D") -> None:
         pass
+
+    def update_rect(self) -> None:
+        self.rect = (self.x, self.y, self.width, self.height)
+
+    def check_collision(self, other: "Area2D") -> bool:
+        self.update_rect()
+        other.update_rect()
+        return self.overlaps(other)
